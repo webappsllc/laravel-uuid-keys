@@ -1,0 +1,34 @@
+{
+    "name": "webapps/laravel-uuid-keys",
+    "description": "Adds tools for defaulting to uuids for all database keys.",
+    "version": "0.1.0",
+    "authors": [
+        {
+            "name": "Justin Scott",
+            "email": "justin@hitpath.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.3",
+        "dyrynda/laravel-model-uuid": "^5.0",
+        "laravel/framework": "^6.10",
+        "dyrynda/laravel-efficient-uuid": "^3.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webapps\\Models\\Support\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Dyrynda\\Database\\LaravelEfficientUuidServiceProvider",
+                "Webapps\\Models\\Support\\UuidKeysProvider"
+            ]
+        }
+    }
+}
+
