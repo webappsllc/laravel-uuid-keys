@@ -12,8 +12,20 @@ These packages can also be referenced for more information.
 
 ## Installation
 
+Add this repository to your composer.json file and install packages.
+
+```json
+"repositories": [{
+    "type": "vcs",
+    "url": "https://github.com/webappsllc/laravel-uuid-keys"
+}],
+"require": {
+    "laravel-uuid-keys": "dev-master"
+},
+```
+
 ```shell
-composer install webapps\laravel-uuid-keys
+composer install
 ```
 
 ## Using Uuids
