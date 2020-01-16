@@ -47,12 +47,10 @@ Refer to [Laravel Efficient UUIDs](https://github.com/michaeldyrynda/laravel-eff
 
 ### Uuids in Models
 
-There are 4 steps to making models work with uuids properly.
+There are 2 steps to making models work with uuids properly.
 
 1. Use the `Webapps\Models\Support\UuidKeys` trait.
 2. Add the uuid columns to the $casts property array with the type of `uuid`
-3. Add a public function called uuidColumns that returns an array with all the names of the uuid columns.
-4. Add a route binding to the App\Providers\RouteServiceProvider class.
 
 Example Model:
 
@@ -74,34 +72,6 @@ class Comment extends Model
         'id' => 'uuid',
         'post_id' => 'uuid'
     ];
-    
-    // Return array of uuid column names
-    public function uuidColumns() : array {
-        return ['id', 'post_id'];
-    }
-}
-```
-
-Example Route Model Binding:
-
-```php
-<?php
-
-namespace App\Providers;
-
-use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
-
-class RouteServiceProvider extends ServiceProvider
-{
-    /* ... Other Route Stuff ... */
-
-    public function boot()
-    {
-        /* ... Other boot stuff ... */
-        Route::bind('comments', function ($uuid) {
-            return App\Models\Comment::whereUuid($uuid)->first();
-        });
-    }
 }
 ```
 

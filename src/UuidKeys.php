@@ -9,14 +9,7 @@ use Dyrynda\Database\Support\GeneratesUuid;
  *
  * Every model should define the following:
  * $casts - Must be include every uuid key including the primary 'id' as the type 'uuid'.
- * public function uuidColumns - Must be defined and return an array of all uuid keys including primary key
  *
- * Additionally the route binding must be defined in \App\Providers\RouteServiceProvider
- *
- * Route::bind('post', function ($post) {
- *     return \App\Post::whereUuid($post)->first();
- * });
- * 
  * @see - https://github.com/michaeldyrynda/laravel-model-uuid
  * @see - https://github.com/michaeldyrynda/laravel-efficient-uuid
  */
@@ -29,6 +22,7 @@ trait UuidKeys {
      * at some cost on writes.
      */
     protected $uuidVersion = 'ordered';
+    protected static $_uuidColumns = null;
 
     /**
       When using this trait be sure to add this mapping if overriding the $casts variable.
@@ -38,5 +32,23 @@ trait UuidKeys {
     public function uuidColumn(): string
     {
         return 'id';
+    }
+
+    public function uuidColumns() : array {
+        return static::$_uuidColumns;
+    }
+
+    public static function bootUuidKeys() : void {
+        $model = new static;
+        if (is_null(static::$_uuidColumns)) {
+            static::$_uuidColumns = [];
+            foreach($model->getCasts() as $column => $type) {
+                static::$_uuidColumns[] = $column;
+            }
+        }
+
+        Route::bind($model->getTable(), function ($uuid) {
+            return static::whereUuid($uuid)->first();
+        });
     }
 }
