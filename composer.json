@@ -1,7 +1,7 @@
 {
     "name": "webapps/laravel-uuid-keys",
     "description": "Adds tools for defaulting to uuids for all database keys.",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "authors": [
         {
             "name": "Justin Scott",
