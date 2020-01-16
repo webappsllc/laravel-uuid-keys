@@ -12,8 +12,20 @@ These packages can also be referenced for more information.
 
 ## Installation
 
+Add this repository to your composer.json file and install packages.
+
+```json
+"repositories": [{
+    "type": "vcs",
+    "url": "https://github.com/webappsllc/laravel-uuid-keys"
+}],
+"require": {
+    "laravel-uuid-keys": "dev-master"
+},
 ```
-composer install webapps\laravel-uuid-keys
+
+```shell
+composer install
 ```
 
 ## Using Uuids
@@ -22,7 +34,7 @@ composer install webapps\laravel-uuid-keys
 
 When migrating just use `efficentUuid` as the column type.
 
-```
+```php
 Schema::create('comments', function (Blueprint $table) {
     $table->efficientUuid('id')->primary();
     $table->efficientUuid('post_id')->index();
@@ -44,14 +56,14 @@ There are 4 steps to making models work with uuids properly.
 
 Example Model:
 
-```
+```php
 <?php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Webapps\Model\Support\UuidKeys;
+use Webapps\Models\Support\UuidKeys;
 
 class Comment extends Model
 {
@@ -72,7 +84,7 @@ class Comment extends Model
 
 Example Route Model Binding:
 
-```
+```php
 <?php
 
 namespace App\Providers;
@@ -99,7 +111,7 @@ Refer to [Laravel Model UUIDs](https://github.com/michaeldyrynda/laravel-model-u
 
 Using these columns requires alternative eloquent methods.
 
-```
+```php
 $comment = Comment::whereUuid($uuid)->find();
 $post = Comment::whereUuid($uuid, 'post_id');
 ```
@@ -114,14 +126,14 @@ These functions should be compatible with the ordered version of UUID_TO_BIN e.g
 
 ### Create Functions
 
-```
+```shell
 php artisan vendor:publish --tag=migrations
 php artisan migrate
 ```
 
 ### Use Functions
 
-```
+```sql
 insert into comments (id,post_id,body) values (uuid2bin(uuid()), uuid2bin('555f470a-33f8-11ea-850d-2e728ce88125'), 'Comment Body');
 select bin2uuid(id) as id, bin2uuid(post_id) as post_id, body from some_table;
 ```
