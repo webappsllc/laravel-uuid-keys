@@ -81,7 +81,7 @@ class DefineUuidFunctions extends Migration
      */
     public function down()
     {
-        DB::unprepared("DROP FUNCTION IF EXISTS uuid2bin");
-        DB::unprepared("DROP FUNCTION IF EXISTS bin2uuid");
+        DB::unprepared("IF EXISTS DROP FUNCTION IF EXISTS uuid2bin");
+        DB::unprepared("IF EXISTS DROP FUNCTION IF EXISTS bin2uuid");
     }
 }
