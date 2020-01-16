@@ -43,7 +43,9 @@ trait UuidKeys {
         if (is_null(static::$_uuidColumns)) {
             static::$_uuidColumns = [];
             foreach($model->getCasts() as $column => $type) {
-                static::$_uuidColumns[] = $column;
+                if($type === 'uuid') {
+                    static::$_uuidColumns[] = $column;
+                }
             }
         }
 
