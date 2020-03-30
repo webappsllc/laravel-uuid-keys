@@ -2,6 +2,7 @@
 
 namespace Webapps\Models\Support;
 
+use Illuminate\Support\Facades\Route
 use Dyrynda\Database\Support\GeneratesUuid;
 
 /**
