@@ -28,7 +28,7 @@ trait UuidKeys {
     /**
       When using this trait be sure to add this mapping if overriding the $casts variable.
     */
-    //protected $casts = ['id' => 'uuid'];
+    //protected $casts = ['id' => Dyrynda\Database\Casts\EfficientUuid];
 
     public function uuidColumn(): string
     {
@@ -51,7 +51,7 @@ trait UuidKeys {
         }
 
         Route::bind($model->getTable(), function ($uuid) {
-            return static::whereUuid($uuid)->first();
+            return static::whereId($uuid)->first();
         });
     }
 }
