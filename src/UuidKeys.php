@@ -27,13 +27,6 @@ trait UuidKeys {
     protected $uuidVersion = 'ordered';
     protected static $_uuidColumns = null;
 
-    /**
-      When using this trait be sure to add this mapping if overriding the $casts variable.
-    */
-    protected $casts = [
-        'id' => EfficientUuid::class
-    ];
-
     public function uuidColumn(): string
     {
         return 'id';
