@@ -49,7 +49,10 @@ trait UuidKeys {
         static::bootGeneratesUuid();
         $model = new static;
         if($model->keyType !== 'string') {
-            throw new LogicException("\$keyType must be set to 'string' on model ")
+            throw new LogicException("Property \$keyType must be set to 'string' on model " . get_class($model) ".");
+        }
+        if($model->incrementing) {
+            throw new LogicException("Property \$incrementing must be set to 'false' on model " . get_class($model) ".");
         }
         if (is_null(static::$_uuidColumns)) {
             static::$_uuidColumns = [];
