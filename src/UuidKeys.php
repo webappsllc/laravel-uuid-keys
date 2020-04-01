@@ -4,7 +4,6 @@ namespace Webapps\Models\Support;
 
 use LogicException;
 use Dyrynda\Database\Support\GeneratesUuid;
-use Dyrynda\Database\Casts\EfficientUuid;
 
 /**
  * Allows models to easily use uuids as model keys.
