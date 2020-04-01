@@ -4,6 +4,7 @@ namespace Webapps\Models\Support;
 
 use Illuminate\Support\Facades\Route;
 use Dyrynda\Database\Support\GeneratesUuid;
+use Dyrynda\Database\Casts\EfficientUuid;
 
 /**
  * Allows models to easily use uuids as model keys.
@@ -19,6 +20,20 @@ trait UuidKeys {
     use GeneratesUuid;
 
     /**
+     * The "type" of the auto-incrementing ID.
+     *
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     *
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
      * Sets the type of uuid to use. Has good tradeoffs that improve reads
      * at some cost on writes.
      */
@@ -28,7 +43,9 @@ trait UuidKeys {
     /**
       When using this trait be sure to add this mapping if overriding the $casts variable.
     */
-    //protected $casts = ['id' => Dyrynda\Database\Casts\EfficientUuid];
+    protected $casts = [
+        'id' => EfficientUuid::class
+    ];
 
     public function uuidColumn(): string
     {
@@ -39,20 +56,20 @@ trait UuidKeys {
         return static::$_uuidColumns;
     }
 
-    public static function booted() : void {
+    /**
+      Populates the uuidColumns list and boots the sub-trait.
+     */
+    public static function booting() : void {
         static::bootGeneratesUuid();
         $model = new static;
         if (is_null(static::$_uuidColumns)) {
             static::$_uuidColumns = [];
             foreach($model->getCasts() as $column => $type) {
-                if($type === 'uuid') {
+                if($type === 'uuid' || is_a($type, EfficientUuid::class)) {
                     static::$_uuidColumns[] = $column;
                 }
             }
         }
-
-        Route::bind($model->getTable(), function ($uuid) {
-            return static::whereId($uuid)->first();
-        });
     }
+
 }
