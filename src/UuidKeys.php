@@ -10,27 +10,14 @@ use Dyrynda\Database\Casts\EfficientUuid;
  *
  * Every model should define the following:
  * $casts - Must be include every uuid key including the primary 'id' as the type 'uuid'.
+ * $keyType - Must be set to string
+ * $incrementing - Must be set to false
  *
  * @see - https://github.com/michaeldyrynda/laravel-model-uuid
  * @see - https://github.com/michaeldyrynda/laravel-efficient-uuid
  */
-
 trait UuidKeys {
     use GeneratesUuid;
-
-    /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
 
     /**
      * Sets the type of uuid to use. Has good tradeoffs that improve reads
@@ -61,6 +48,9 @@ trait UuidKeys {
     public static function booting() : void {
         static::bootGeneratesUuid();
         $model = new static;
+        if($model->keyType !== 'string') {
+            throw new LogicException("\$keyType must be set to 'string' on model ")
+        }
         if (is_null(static::$_uuidColumns)) {
             static::$_uuidColumns = [];
             foreach($model->getCasts() as $column => $type) {
