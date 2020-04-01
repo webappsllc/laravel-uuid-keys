@@ -2,7 +2,6 @@
 
 namespace Webapps\Models\Support;
 
-use Illuminate\Support\Facades\Route;
 use Dyrynda\Database\Support\GeneratesUuid;
 use Dyrynda\Database\Casts\EfficientUuid;
 
@@ -65,7 +64,7 @@ trait UuidKeys {
         if (is_null(static::$_uuidColumns)) {
             static::$_uuidColumns = [];
             foreach($model->getCasts() as $column => $type) {
-                if($type === 'uuid' || is_a($type, EfficientUuid::class)) {
+                if(is_a($type, EfficientUuid::class) || $type === 'uuid') {
                     static::$_uuidColumns[] = $column;
                 }
             }
