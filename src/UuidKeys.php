@@ -39,7 +39,7 @@ trait UuidKeys {
     /**
       Populates the uuidColumns list and boots the sub-trait.
      */
-    public static function booting() : void {
+    public static function booted() : void {
         static::bootGeneratesUuid();
         $model = new static;
         if($model->keyType !== 'string') {
