@@ -39,7 +39,8 @@ trait UuidKeys {
         return static::$_uuidColumns;
     }
 
-    public static function bootUuidKeys() : void {
+    public static function booted() : void {
+        static::bootGeneratesUuid();
         $model = new static;
         if (is_null(static::$_uuidColumns)) {
             static::$_uuidColumns = [];
