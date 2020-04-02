@@ -15,24 +15,10 @@ abstract class UuidBaseModel extends Model {
     }
 
     /**
-     * The "type" of the auto-incrementing ID.
-     *
-     * @var string
-     */
-    protected $keyType = 'string';
-
-    /**
-     * Indicates if the IDs are auto-incrementing.
-     *
-     * @var bool
-     */
-    public $incrementing = false;
-
-    /**
       When using this trait be sure to add this mapping if overriding the $casts variable.
     */
     protected $casts = [
-        'id' => EfficientUuid::class
+        'uuid' => EfficientUuid::class
     ];
 
     public static function booted() {

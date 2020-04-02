@@ -9,7 +9,7 @@ use Dyrynda\Database\Support\GeneratesUuid;
  * Allows models to easily use uuids as model keys.
  *
  * Every model should define the following:
- * $casts - Must be include every uuid key including the primary 'id' as the type 'uuid'.
+ * $casts - Must be include every uuid key including the default 'uuid' column as the type EfficientUuid.
  * $keyType - Must be set to string
  * $incrementing - Must be set to false
  *
@@ -28,7 +28,7 @@ trait UuidKeys {
 
     public function uuidColumn(): string
     {
-        return 'id';
+        return 'uuid';
     }
 
     public function uuidColumns() : array {
@@ -41,12 +41,6 @@ trait UuidKeys {
     public static function booted() : void {
         static::bootGeneratesUuid();
         $model = new static;
-        if($model->keyType !== 'string') {
-            throw new LogicException("Property \$keyType must be set to 'string' on model " . get_class($model) . ".");
-        }
-        if($model->incrementing) {
-            throw new LogicException("Property \$incrementing must be set to 'false' on model " . get_class($model) . ".");
-        }
         if (is_null(static::$_uuidColumns)) {
             static::$_uuidColumns = [];
             foreach($model->getCasts() as $column => $type) {

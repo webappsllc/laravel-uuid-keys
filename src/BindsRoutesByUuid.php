@@ -9,7 +9,7 @@ trait BindsRoutesByUuid {
         $model = new static;
 
         Route::bind($model->getTable(), function ($uuid) {
-            return static::whereId($uuid)->first();
+            return static::whereUuid($uuid)->first();
         });
     }
 }
