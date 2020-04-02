@@ -35,13 +35,13 @@ trait UuidKeys {
         return static::$_uuidColumns;
     }
 
-    public function findByUuid($id, $columns = ['*'])
+    public function scopeFindByUuid($query, $id, $columns = ['*'])
     {
         if (is_array($id) || $id instanceof Arrayable) {
-            return $this->whereUuid($id)->get($columns);
+            return $query->whereUuid($id)->get($columns);
         }
 
-        return $this->whereUuid($id)->first($columns);
+        return $query->whereUuid($id)->first($columns);
     }
 
     /**
