@@ -35,6 +35,13 @@ trait UuidKeys {
         return static::$_uuidColumns;
     }
 
+    /**
+      Allows the uuid to be used as the route id.
+     */
+    public function getRouteKeyName() {
+        return 'uuid';
+    }
+
     public function scopeFindByUuid($query, $id, $columns = ['*'])
     {
         if (is_array($id) || $id instanceof Arrayable) {
