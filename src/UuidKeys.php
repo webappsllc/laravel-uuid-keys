@@ -45,10 +45,10 @@ trait UuidKeys {
     public static function findByUuid($id, $columns = ['*'])
     {
         if (is_array($id) || $id instanceof Arrayable) {
-            return $this->whereUuid($id)->get($columns);
+            return static::whereUuid($id)->get($columns);
         }
 
-        return $this->whereUuid($id)->first($columns);
+        return static::whereUuid($id)->first($columns);
     }
 
     /**
