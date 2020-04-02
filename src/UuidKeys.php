@@ -35,6 +35,15 @@ trait UuidKeys {
         return static::$_uuidColumns;
     }
 
+    public function findByUuid($id, $columns = ['*'])
+    {
+        if (is_array($id) || $id instanceof Arrayable) {
+            return $this->whereUuid($id)->get($columns);
+        }
+
+        return $this->whereUuid($id)->first($columns);
+    }
+
     /**
       Populates the uuidColumns list and boots the sub-trait.
      */
