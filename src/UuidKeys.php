@@ -54,6 +54,10 @@ trait UuidKeys {
                     static::$_uuidColumns[] = $column;
                 }
             }
+
+            if(empty(static::$_uuidColumns)) {
+                static::$_uuidColumns[] = $model->uuidColumn();
+            }
         }
     }
 
