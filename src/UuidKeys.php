@@ -50,7 +50,7 @@ trait UuidKeys {
         if (is_null(static::$_uuidColumns)) {
             static::$_uuidColumns = [];
             foreach($model->getCasts() as $column => $type) {
-                if(is_a($type, EfficientUuid::class) || $type === 'uuid') {
+                if($type === EfficientUuid::class || $type === 'uuid') {
                     static::$_uuidColumns[] = $column;
                 }
             }
