@@ -41,7 +41,7 @@ $supportedVersions = [
      * @return \Ramsey\Uuid\Uuid
      */
     public function makeUuid(): Uuid {
-        return ($this->maker)($this->$version);
+        return ($this->maker)($this->version);
     }
 
     /**
