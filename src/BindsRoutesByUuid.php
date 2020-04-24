@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
  */
 trait BindsRoutesByUuid {
 
-    abstract public function uuidColumn(): string
+    abstract public function uuidColumn(): string;
 
     /**
      * Defines the column to use for model route binding.

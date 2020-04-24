@@ -48,8 +48,7 @@ trait UuidKeys {
     protected static ?array $_uuidColumns = null;
 
     /**
-     
-* Determine whether an attribute should be cast to a native type.
+     * Determine whether an attribute should be cast to a native type.
      *
      * @param  string  $key
      * @param  array|string|null  $types
