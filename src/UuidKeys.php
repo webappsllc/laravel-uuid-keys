@@ -15,9 +15,12 @@ use Dyrynda\Database\Support\GeneratesUuid;
  *
  * @see - https://github.com/michaeldyrynda/laravel-model-uuid
  * @see - https://github.com/michaeldyrynda/laravel-efficient-uuid
+
  */
 trait UuidKeys {
-    use GeneratesUuid;
+    use GeneratesUuid {
+        bootGeneratesUuid as originalBootGeneratesUuid;
+    }
 
     /**
      * Sets the type of uuid to use. Has good tradeoffs that improve reads
@@ -69,6 +72,27 @@ trait UuidKeys {
                 static::$_uuidColumns[] = $model->uuidColumn();
             }
         }
+    }
+
+    public static function bootGeneratesUuid(): void
+    {
+        static::saving(function ($model) {
+            foreach ($model->uuidColumns() as $item) {
+                /* @var \Illuminate\Database\Eloquent\Model|static $model */
+                $uuid = $model->resolveUuid();
+
+                if (isset($model->attributes[$item]) && ! is_null($model->attributes[$item])) {
+                    /* @var \Ramsey\Uuid\Uuid $uuid */
+                    try {
+                        $uuid = $uuid->fromString(strtolower($model->attributes[$item]));
+                    } catch (InvalidUuidStringException $e) {
+                        $uuid = $uuid->fromBytes($model->attributes[$item]);
+                    }
+                }
+
+                $model->{$item} = strtolower($uuid->toString());
+            }
+        });
     }
 
 }
