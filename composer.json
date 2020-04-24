@@ -10,7 +10,6 @@
     ],
     "require": {
         "php": ">=7.4",
-        "dyrynda/laravel-model-uuid": "^6",
         "laravel/framework": "^7",
         "dyrynda/laravel-efficient-uuid": "^4"
     },
